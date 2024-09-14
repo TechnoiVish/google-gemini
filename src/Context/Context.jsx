@@ -39,7 +39,7 @@ setRecentPrompt(prompt)
     }
 
     setRecentPrompt(input)
-    setPrevPrompts(prev=>[...prev,input])
+    // setPrevPrompts(prev=>[...prev,input])
     setInput("")
   
    let responseArray=response.split("**");
