@@ -88,7 +88,7 @@ color:#585858;
     justify-content:space-between;
     gap:20px;
     background-color:#f0f4f9;
-    padding:10px 20px;
+    padding:5px 20px;
     border-radius:50px;
 }
 
@@ -103,7 +103,7 @@ background:transparent;
 border:none;
 outline:none;
 padding:8px;
-font-size:18px;
+font-size:16px;
 }
 .search-box div{
     
@@ -115,7 +115,7 @@ font-size:18px;
 
 .main .bottom-info{
     font-size:13px;
-    margin:15px auto;
+    margin:10px auto;
     text-align:center;
     font-weight:300;
 }
@@ -176,6 +176,17 @@ display:none;
    .search-box input{
     width:50px;
    }
-  
+   .search-box{
+    font-size: 12px;
+    margin: -10px auto;
+    
+}
 
+}
+@media (max-width:321px){
+    .search-box{
+        font-size: 12px;
+        margin: -10px auto;
+        
+    }
 }
