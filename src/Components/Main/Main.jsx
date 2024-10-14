@@ -9,6 +9,7 @@ const Main = () => {
     const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
     const { transcript, browserSupportsSpeechRecognition, resetTranscript } = useSpeechRecognition();
     const [prevTranscript, setPrevTranscript] = useState(''); // To store previous transcript
+    const [myfile, setMyfile] = useState(null); // State to store the selected file
 
     useEffect(() => {
         if (transcript && transcript !== prevTranscript) {
@@ -29,22 +30,25 @@ const Main = () => {
     }
 
     const openGallery = () => {
-        document.getElementById('fileInput').click(); // Simulates a click on the hidden file input
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput) {
+            fileInput.click(); // Simulates a click on the hidden file input
+        }
     };
 
     const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-          if (input.trim()||pText) {  // Make sure the input is not just empty spaces
-              onSent(); // Trigger sending the input when Enter key is pressed
-              e.preventDefault();
-          }
-      }
-  };
-  
+        if (e.key === 'Enter') {
+            if (input.trim()) {  // Make sure the input is not just empty spaces
+                onSent(); // Trigger sending the input when Enter key is pressed
+                e.preventDefault();
+            }
+        }
+    };
 
     const handleFileChange = (e) => {
-        const myfile = e.target.files[0]; // You can handle the selected file here
-        console.log(myfile); // You can now work with the selected file
+        const file = e.target.files[0];
+        setMyfile(file); // Update the file state when a file is selected
+        console.log(file); // You can now work with the selected file
     };
 
     const handleCardClick = (event) => {
@@ -75,11 +79,11 @@ const Main = () => {
                                 <img src={assets.bulb_icon} alt="" />
                             </div>
                             <div className="card" onClick={handleCardClick}>
-                                <p>Help me plan for a 5K run, I have 1 month to train.</p>
+                                <p>Help me plan for a 5Km run, I have 1 month to train.</p>
                                 <img src={assets.message_icon} alt="" />
                             </div>
                             <div className="card" onClick={handleCardClick}>
-                                <p>Settle a debate:Web development, Machine Learning, or Data Analyst.</p>
+                                <p>Settle a debate: Web development, Machine Learning, or Data Analyst.</p>
                                 <img src={assets.code_icon} alt="" />
                             </div>
                         </div>
@@ -105,22 +109,33 @@ const Main = () => {
                     </div>
                 )}
                 <div className="main-bottom">
-                    <div className="search-box">
-                        <input id='text' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Enter Prompt Here' onKeyDown={handleKeyDown} />
+                    <div className="search-box" style={{ display: "flex", flexDirection: "column" }}>
+                        {/* Always render the file input, but hide it */}
                         <input
                             id="fileInput"
                             type="file"
-                            style={{ display: 'none' }}
                             onChange={handleFileChange}
+                            style={{ display: 'none' }} // Keep it hidden
                         />
+                        
+                        <div>
+                            <input
+                                id='text'
+                                onChange={(e) => setInput(e.target.value)}
+                                value={input}
+                                type="text"
+                                placeholder='Enter Prompt Here'
+                                onKeyDown={handleKeyDown}
+                            />
                         <div>
                             <img src={assets.gallery_icon} alt="" onClick={openGallery} />
                             <img src={assets.mic_icon} alt="" onClick={SpeechRecognition.startListening} />
-                            {input && <img onClick={() => onSent()} src={assets.send_icon} alt="" />}
+                            {input && <img onClick={onSent} src={assets.send_icon} alt="" />}
+                        </div>
                         </div>
                     </div>
                     <div className="bottom-info">
-                    Gemini 2.0 a powerful artificial intelligence (AI) model from Google.
+                        Gemini 2.0 a powerful artificial intelligence (AI) model from Google.
                     </div>
                 </div>
             </div>
